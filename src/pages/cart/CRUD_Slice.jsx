@@ -103,10 +103,10 @@ const CRUD_Slice = createSlice({
       .addCase(clearCart.pending, state => {
         state.status = 'loading';
       })
-      .addCase(clearCart.fulfilled, (state, action) => {
+      .addCase(clearCart.fulfilled, state => {
         state.status = 'succeed';
 
-        console.log(action);
+        toast.success('已清空購物車！');
       })
       .addCase(clearCart.rejected, (state, action) => {
         state.status = 'failed';
@@ -160,7 +160,7 @@ export const editCart = createAsyncThunk('CRUD/editCart', async ({ itemId, produ
 
 
 
-export const delCartItem = createAsyncThunk('CRUD/delCartItem', async ( itemId, {dispatch } ) => {
+export const delCartItem = createAsyncThunk('CRUD/delCartItem', async ( itemId, { dispatch } ) => {
   const res = await axios.delete(`${BASE_URL}/v2/api/${API_PATH}/cart/${itemId}`);
 
   dispatch(fetchCart());
@@ -171,10 +171,10 @@ export const delCartItem = createAsyncThunk('CRUD/delCartItem', async ( itemId, 
 
 
 
-export const clearCart = createAsyncThunk('CRUD/clearCart', async () => {
-  const res = await axios.delete(`${BASE_URL}/v2/api/${API_PATH}/carts`);
+export const clearCart = createAsyncThunk('CRUD/clearCart', async ( _, { dispatch }) => {
+  await axios.delete(`${BASE_URL}/v2/api/${API_PATH}/carts`);
 
-  console.log(res);
+  dispatch(fetchCart());
 })
 
 

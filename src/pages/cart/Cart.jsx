@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { delCartItem, editCart, fetchCart, selectCart, selectDiscountTotal, selectTransFee } from "./CRUD_Slice";
+import { clearCart, delCartItem, editCart, fetchCart, selectCart, selectDiscountTotal, selectTransFee } from "./CRUD_Slice";
 import { useEffect } from "react";
 
 
@@ -144,7 +144,17 @@ function Cart () {
                   <p className="mb-0 h4 fw-bold">合計總結：</p>
                   <p className="mb-0 h4 fw-bold">NT$ {(discountTotal + transFee).toLocaleString()}</p>
                 </div>
-                <Link to='/checkout' className="btn btn-dark btn-block mt-4 rounded-0 py-3">前往結帳</Link>
+
+                <div className="d-flex justify-content-between mt-4">
+                  <Link to='/checkout' className="btn btn-dark rounded-0 py-3">前往結帳</Link>
+
+                  <button
+                    className="btn btn-danger rounded-0 py-3"
+                    onClick={() => dispatch(clearCart())}
+                    >
+                      清空購物車
+                  </button>
+                </div>
               </div>
             }
             
